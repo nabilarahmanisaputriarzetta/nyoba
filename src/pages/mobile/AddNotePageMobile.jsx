@@ -15,7 +15,6 @@ function AddNotePage() {
   const [searchParams] = useSearchParams()
   const { addNote } = useNotes()
   const [title, setTitle] = useState("")
-  const [content, setContent] = useState("")
   const [showUploadModal, setShowUploadModal] = useState(false)
 
   // Check if we should show the upload modal immediately
@@ -27,7 +26,7 @@ function AddNotePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await addNote(title, content)
+    await addNote(title)
     navigate("/")
   }
 
@@ -49,20 +48,6 @@ function AddNotePage() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Enter note title"
-                required
-              />
-            </div>
-
-            <div>
-              <label htmlFor="content" className="block mb-1 text-sm font-medium">
-                Content
-              </label>
-              <Textarea
-                id="content"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Enter note content"
-                rows={8}
                 required
               />
             </div>
