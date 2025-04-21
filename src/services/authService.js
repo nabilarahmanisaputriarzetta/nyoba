@@ -58,7 +58,7 @@ export const login = async (email, password) => {
     })
   }
   
-    export const logout = async () => {
+  export const logout = async () => {
         // Simulate logout
         return new Promise((resolve) => {
         setTimeout(() => {
@@ -68,4 +68,23 @@ export const login = async (email, password) => {
         }, 500)
         })
     }
+
+export const resetPassword = async (newPassword) => {
+  // Simulate API call to reset password
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (newPassword && newPassword.length >= 6) {
+        resolve({
+          success: true,
+          message: "Password reset successful"
+        })
+      } else {
+        reject({
+          success: false,
+          error: "Password must be at least 6 characters"
+        })
+      }
+    }, 1000)
+  })
+}
       

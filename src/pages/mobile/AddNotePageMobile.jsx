@@ -113,7 +113,7 @@ function UploadModal({ onClose }) {
 
   const handleUploadComplete = async () => {
     if (uploadedFile) {
-      // In a real app, you would upload the file to a server here
+      // you would upload the file to a server here
       // For now, we'll just create a note with the file name
       await addNote(title || uploadedFile.name, `Uploaded file: ${uploadedFile.name}`)
       navigate("/")

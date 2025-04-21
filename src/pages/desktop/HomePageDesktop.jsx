@@ -14,10 +14,6 @@ function HomePage() {
 
   const totalPages = Math.ceil(notes.length / itemsPerPage);
 
-  const handleEdit = (id) => {
-    navigate(`/edit/${id}`);
-  };
-
   const handleDelete = async (id) => {
     await deleteNote(id);
   };
@@ -48,7 +44,6 @@ function HomePage() {
                 key={note.id}
                 id={note.id}
                 title={note.title}
-                onEdit={handleEdit}
                 onDelete={handleDelete}
               />
             ))}

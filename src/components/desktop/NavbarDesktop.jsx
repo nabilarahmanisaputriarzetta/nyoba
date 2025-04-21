@@ -46,7 +46,7 @@ const Navbar = () => {
               />
             </svg>
           </div>
-          <Link to="/homepage" className="text-2xl font-bold text-[#215273]">
+          <Link to="/" className="text-2xl font-bold text-[#215273]">
             Home
           </Link>
         </div>

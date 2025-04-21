@@ -1,56 +1,83 @@
 "use client"
 
-import { useState } from "react"
-import { useNavigate, Link } from "react-router-dom"
-import Logo from "../components/icons/Logo"
+import { useState, useEffect } from "react"
+import { useNavigate, useLocation, Link } from "react-router-dom"
+import Logo from "../components/Icons/Logo"
 import Separator from "../components/Separator"
 import { useAuth } from "../contexts/AuthContext"
 
 const Login = () => {
   const navigate = useNavigate()
-  const { loginUser, loginWithGoogleUser } = useAuth()
+  const location = useLocation()
+  const { login } = useAuth()
+  const params = new URLSearchParams(location.search)
+  const justSignedUp = params.get("verificationSent") === "true"
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
+  const [successMessage, setSuccessMessage] = useState("")
+
+  useEffect(() => {
+    if (justSignedUp) {
+      setSuccessMessage("Verifikasi email berhasil dikirim! Cek inbox Anda.")
+    }
+  }, [justSignedUp])
+
+  useEffect(() => {
+    window.onerror = (msg, url, line, col, err) => {
+      console.error("Runtime Error:", msg, "at", url)
+      setErrorMessage("Terjadi kesalahan aplikasi.")
+    }
+  }, [])
+
+  const redirectToUserPage = (displayNameOrEmail) => {
+    const slug =
+      displayNameOrEmail
+        ?.toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9-]/g, "") || "user"
+    navigate(`/${slug}`, { replace: true })
+  }
 
   const handleLogin = async (e) => {
     e.preventDefault()
     setErrorMessage("")
-
-    if (password.length < 8) {
-      setErrorMessage("Password must be at least 8 characters.")
-      return
-    }
-
+    setSuccessMessage("")
     setLoading(true)
+
     try {
-      const result = await loginUser(email, password)
-      if (result.success) {
-        navigate("/")
+      const result = await login(email, password)
+
+      if (!result) {
+        setErrorMessage("Invalid email or password")
       } else {
-        setErrorMessage("Incorrect email or password.")
+        const userSlug = result.name?.toLowerCase().replace(/\s+/g, "-") || "user"
+        navigate(`/${userSlug}`, { replace: true })
       }
-    } catch (error) {
-      setErrorMessage("Login failed. Please try again.")
+    } catch (err) {
+      setErrorMessage("Terjadi kesalahan. Silakan coba lagi.")
     } finally {
       setLoading(false)
     }
   }
 
   const handleGoogleLogin = async () => {
-    setLoading(true)
     setErrorMessage("")
+    setSuccessMessage("")
+    setLoading(true)
+
     try {
-      const result = await loginWithGoogleUser()
+      // Mock Google login for now
+      const result = await new Promise((resolve) => setTimeout(() => resolve({ success: true, name: "User" }), 1000))
+
       if (result.success) {
-        navigate("/")
-      } else {
-        setErrorMessage("Google login failed.")
+        const userSlug = result.name?.toLowerCase().replace(/\s+/g, "-") || "user"
+        navigate(`/${userSlug}`, { replace: true })
       }
     } catch (error) {
-      setErrorMessage("Something went wrong with Google login.")
+      setErrorMessage("Google login failed. Please try again.")
     } finally {
       setLoading(false)
     }
@@ -63,13 +90,17 @@ const Login = () => {
       </div>
 
       <h1 className="text-[32px] font-bold text-center text-black mb-4">Welcome Back</h1>
-      <p className="text-[14px] text-gray-600 text-center mb-6">
-        Log in to access your account
-      </p>
+      <p className="text-[14px] text-gray-600 text-center mb-6">Log in to access your account</p>
 
       {errorMessage && (
         <div className="w-full max-w-[352px] mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
           {errorMessage}
+        </div>
+      )}
+
+      {successMessage && (
+        <div className="w-full max-w-[352px] mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+          {successMessage}
         </div>
       )}
 
@@ -109,6 +140,13 @@ const Login = () => {
           {loading ? "Logging in..." : "Login"}
         </button>
       </form>
+
+      {/* Forgot Password Link - Styled according to the design */}
+      <div className="w-full max-w-[352px] flex justify-center mt-6">
+        <Link to="/EmailForgotPassword" className="text-[13px] text-black hover:underline">
+          Forgot Password? Click Here
+        </Link>
+      </div>
 
       <div className="flex gap-2 mt-4 mb-6 text-sm text-gray-600">
         <span>Don't have an account?</span>

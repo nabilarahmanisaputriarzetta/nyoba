@@ -13,7 +13,6 @@ function AddNotePage() {
   const [searchParams] = useSearchParams();
   const { addNote } = useNotes();
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
   const [showUploadModal, setShowUploadModal] = useState(false);
 
   // Check if we should show the upload modal immediately
@@ -25,8 +24,8 @@ function AddNotePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addNote(title, content);
-    navigate('/');
+    await addNote(title);
+    navigate('/catatan');
   };
 
   return (
@@ -49,30 +48,6 @@ function AddNotePage() {
                 placeholder="Enter note title"
                 required
               />
-            </div>
-
-            <div>
-              <label htmlFor="content" className="block mb-1 text-sm font-medium">
-                Content
-              </label>
-              <Textarea
-                id="content"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Enter note content"
-                rows={10}
-                required
-              />
-            </div>
-
-            <div className="flex items-center gap-4">
-              <Button 
-                type="button" 
-                variant="outline" 
-                onClick={() => setShowUploadModal(true)}
-              >
-                Upload Image
-              </Button>
             </div>
 
             <div className="flex justify-end gap-4 mt-6">
@@ -120,7 +95,7 @@ function UploadModal({ onClose }) {
   const handleUploadComplete = async () => {
     if (uploadedFile) {
       await addNote(title || uploadedFile.name, `Uploaded file: ${uploadedFile.name}`);
-      navigate('/');
+      navigate('/catatan');
     } else {
       onClose();
     }
