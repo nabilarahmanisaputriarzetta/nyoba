@@ -14,6 +14,10 @@ function HomePage() {
   
   const totalPages = Math.ceil(notes.length / itemsPerPage);
 
+  const handleEdit = (id) => {
+    navigate(`/edit/${id}`)
+  }
+
   const handleDelete = async (id) => {
     await deleteNote(id)
   }
@@ -22,10 +26,12 @@ function HomePage() {
     setCurrentPage(page)
   }
 
-  const paginatedNotes = notes
-    .slice()
-    .reverse()
-    .slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+  const paginatedNotes = Array.isArray(notes)
+  ? notes
+      .slice()
+      .reverse()
+      .slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+  : [];
   
   return (
     <main className="min-h-screen blue-gradient-bg">
@@ -42,7 +48,9 @@ function HomePage() {
               <NoteCard 
                 key={note.id} 
                 id={note.id} 
-                title={note.title}
+                title={note.title} 
+                content={note.content}
+                onEdit={handleEdit} 
                 onDelete={handleDelete} />
             ))}
           </div>

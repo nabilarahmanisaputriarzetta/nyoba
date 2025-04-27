@@ -11,6 +11,7 @@ function UploadPage() {
   const navigate = useNavigate()
   const { addNote } = useNotes()
   const [uploadedFile, setUploadedFile] = useState(null)
+  const [title, setTitle] = useState("")
   const [uploading, setUploading] = useState(false)
 
   const handleDragOver = (e) => {
