@@ -5,7 +5,6 @@ import Navbar from '../../components/desktop/NavbarDesktop';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import Input from '../../components/Input';
-import Textarea from '../../components/Textarea';
 import { useNotes } from '../../contexts/NoteContext';
 import { uploadImageAndSaveNote } from '../../services/noteService';
 import { useAuth } from "../../contexts/AuthContext";
@@ -161,12 +160,12 @@ function UploadModal({ onClose }) {
   };
 
   const handleUploadComplete = async () => {
-     if (uploadedFile) {
-       await addNote(title || uploadedFile.name, `Uploaded file: ${uploadedFile.name}`);
-       navigate('/');
-     } else {
-     onClose();
-     }
+    // if (uploadedFile) {
+    //   await addNote(title || uploadedFile.name, `Uploaded file: ${uploadedFile.name}`);
+    //   navigate('/');
+    // } else {
+    //   onClose();
+    // }
     if (!uploadedFile) {
       setError('No file selected.');
       return;

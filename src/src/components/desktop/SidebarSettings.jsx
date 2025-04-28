@@ -35,11 +35,11 @@ export default function SidebarSettings({
   };
 
   return (
-    <div className="fixed inset-0 z-20 flex justify-end bg-black bg-opacity-50">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-20 flex justify-end">
       <div className="w-[300px] h-full bg-blue-900 shadow-lg">
         {/* Close Button */}
         <button
-          className="p-2 font-bold text-white"
+          className="p-2 text-white font-bold"
           onClick={onClose} // Close sidebar
         >
           ✕
@@ -60,7 +60,7 @@ export default function SidebarSettings({
                   <img
                     src={profilePicture}
                     alt="Preview"
-                    className="w-20 h-20 border-2 border-white rounded-full"
+                    className="w-20 h-20 rounded-full border-2 border-white"
                   />
                 )}
               </div>
@@ -68,19 +68,19 @@ export default function SidebarSettings({
               <img
                 src={profilePicture}
                 alt="Profile"
-                className="w-20 h-20 border-2 border-white rounded-full"
+                className="w-20 h-20 rounded-full border-2 border-white"
               />
             )}
 
             {/* Username */}
-            <div className="flex items-center justify-between w-full">
+            <div className="flex justify-between w-full items-center">
               {isEditing ? (
                 <input
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Edit Username"
-                  className="w-full p-2 text-black rounded"
+                  className="w-full text-black p-2 rounded"
                 />
               ) : (
                 <span className="text-lg font-semibold">{username}</span>
@@ -94,15 +94,15 @@ export default function SidebarSettings({
             </div>
 
             {/* Email */}
-            <p className="text-sm text-center underline break-all">
+            <p className="text-sm underline break-all text-center">
               CacingPintar97@gmail.com
             </p>
 
             {/* Dropdown - Jenjang */}
             <div className="w-full">
-              <label className="block mb-1 text-sm">Jenjang Pendidikan</label>
+              <label className="block text-sm mb-1">Jenjang Pendidikan</label>
               <select
-                className="w-full p-2 text-black rounded"
+                className="w-full text-black p-2 rounded"
                 value={educationLevel}
                 onChange={(e) => setEducationLevel(e.target.value)}
               >
@@ -114,9 +114,9 @@ export default function SidebarSettings({
 
             {/* Dropdown - Kelas */}
             <div className="w-full">
-              <label className="block mb-1 text-sm">Kelas</label>
+              <label className="block text-sm mb-1">Kelas</label>
               <select
-                className="w-full p-2 text-black rounded"
+                className="w-full text-black p-2 rounded"
                 value={classLevel}
                 onChange={(e) => setClassLevel(e.target.value)}
               >
@@ -131,17 +131,17 @@ export default function SidebarSettings({
             {/* Save Button */}
             <button
               onClick={handleSave} // Fungsi untuk menyimpan data
-              className="w-full py-2 font-semibold text-blue-900 bg-white rounded hover:bg-gray-100"
+              className="bg-white text-blue-900 w-full py-2 rounded font-semibold hover:bg-gray-100"
             >
               SAVE
             </button>
 
             {/* Reset Password & Log Out */}
-            <div className="flex items-center justify-between w-full pt-4">
+            <div className="flex justify-between items-center w-full pt-4">
               <a href="#" className="text-sm underline">
                 Reset Password
               </a>
-              <button className="px-4 py-1 text-blue-900 bg-white rounded hover:bg-gray-100">
+              <button className="bg-white text-blue-900 px-4 py-1 rounded hover:bg-gray-100">
                 Log Out
               </button>
             </div>
